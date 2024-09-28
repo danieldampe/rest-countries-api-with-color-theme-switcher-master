@@ -1,0 +1,55 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Country } from '../services/country'
+
+const regions = Country.getAllRegions()
+const options = ['Filter by Region', ...regions]
+---
+
+<form id="country-form" class="flex flex-col gap-y-10 text-xs [&_>_*]:bg-[--color-element] [&_>_*]:rounded-md [&_>_*]:shadow-md md:flex-row md:justify-between md:text-sm">
+  <div class="flex md:w-[480px]">
+    <button class="py-3.5 px-7 rounded-l-[inherit] md:px-8" type="submit">
+      <Icon class="text-lg" name="ion:search" />
+    </button>
+    <input 
+      class="flex-grow bg-inherit rounded-r-[inherit]" 
+      type="text" 
+      name="name"
+      placeholder="Search for a country…"
+    >
+  </div>
+  <div class="relative w-fit">
+    <select class="py-4 pl-6 pr-24 appearance-none rounded-[inherit] bg-inherit md:pl-5 md:pr-20" name="region">
+      {options.map((optn) => (
+        <option value={optn}>{optn}</option>
+      ))}
+    </select>
+    <Icon class="absolute top-2/4 right-6 md:right-5 -translate-y-2/4" name="ion:chevron-down-outline" />
+  </div>
+</form>
+
+<script>
+  import u from 'umbrellajs'
+  import { Country } from '../services/country'
+
+  const handleInput = ({ currentTarget }: Event) => {
+    if (!(currentTarget instanceof HTMLFormElement)) return
+    const entries = new FormData(currentTarget)
+    const formData = Object.fromEntries(entries)
+    const countries = Country.getByFields(formData)
+    const codes = Country.getAllCodes(countries)
+    u('[data-id=country-card]').each((node) => {
+      const countryCard = u(node)
+      const code = countryCard.data('code')
+      if (code === null) return
+      if (codes.includes(code)) countryCard.removeClass('hidden')
+      else countryCard.addClass('hidden')
+    })
+  }
+
+  const assign = () => u('#country-form').handle('input', handleInput)
+  
+  assign()
+
+  document.addEventListener('astro:page-load', assign)
+</script>

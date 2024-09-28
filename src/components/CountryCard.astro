@@ -1,0 +1,27 @@
+---
+import type { Country as Props } from "../types"
+
+const { flags, name, population, region, capital, alpha3Code } = Astro.props
+const info = { population, region, capital }
+const url = '/countries/' + alpha3Code
+const altText = `The flag of ${name}`
+---
+
+<a href={url} class="flex flex-col rounded-md shadow-2xl overflow-hidden transition-transform hover:scale-105" data-id="country-card" data-code={alpha3Code}>
+  <div class="sm:h-40">
+    <img class="sm:size-full sm:object-cover" src={flags.svg} alt={altText}>
+  </div>
+  <div class="flex-grow space-y-4 p-6 pb-10 bg-[--color-element]">
+    <div>
+      <h2 class="font-bold text-lg">{name}</h2>
+    </div>
+    <div class="space-y-1 text-sm">
+      {Object.entries(info).map(([key, value]) => (
+        <div>
+          <span class="capitalize font-medium">{key}:</span>
+          <span>{value}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</a>

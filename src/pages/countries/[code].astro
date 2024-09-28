@@ -1,0 +1,90 @@
+---
+import type { GetStaticPaths } from "astro"
+import Layout from "../../layouts/Layout.astro"
+import { Country } from "../../services/country"
+import { Icon } from "astro-icon/components"
+
+export const getStaticPaths = (() => {
+  const codes = Country.getAllCodes()
+  return codes.map((code) => ({
+    params: { code }
+  }))
+}) satisfies GetStaticPaths;
+
+const { code } = Astro.params
+const country = Country.getByCode({ code })
+if (!country) throw new Error('Country not found')
+const { flags, name, nativeName, population, region, subregion, capital, topLevelDomain, currencies, languages, borders } = country
+const newCurrencies = currencies?.map(crr => crr.name).join(', ')
+const newLanguages = languages.map(lng => lng.name).join(', ')
+const altText = `The flag of ${name}`
+---
+
+<Layout title="cascas">
+  <div class="py-6 px-3 md:pb-32">
+    <div class="max-w-container mx-auto space-y-12 md:space-y-20">
+      <div>
+        <a class="inline-flex items-center gap-x-1.5 py-1.5 px-7 bg-[--color-element] rounded-sm shadow-md hover:brightness-75 dark:hover:brightness-125 md:py-2.5 md:px-10 md:rounded-md md:[&_>_*]:text-base" href="/">
+          <Icon name="ion:arrow-back" />
+          <span class="text-sm">Back</span>
+        </a>
+      </div>
+      <div class="flex flex-col md:flex-row md:justify-between md:gap-x-12 md:[&_>_*]:basis-3/6">
+        <div class="max-w-[560px]">
+          <img class="md:min-w-full" src={flags.png} alt={altText}>
+        </div>
+        <div class="py-10 [&_span]:font-medium md:max-w-[575px] md:py-0 lg:py-10">
+          <div>
+            <h1 class="font-bold text-xl md:text-3xl">{name}</h1>
+          </div>
+          <div class="flex flex-col gap-y-10 mt-5 text-sm [&_ul]:space-y-2 md:flex-row md:justify-between md:gap-x-4 md:mt-8 lg:text-base">
+            <ul>
+              <li>
+                <span>Native Name:</span>
+                {nativeName}
+              </li>
+              <li>
+                <span>Population:</span>
+                {population}
+              </li>
+              <li>
+                <span>Region:</span>
+                {region}
+              </li>
+              <li>
+                <span>Subregion:</span>
+                {subregion}
+              </li>
+              <li>
+                <span>Capital:</span>
+                {capital}
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <span>Top Level Domain:</span>
+                {topLevelDomain}
+              </li>
+              <li>
+                <span>Currencies:</span>
+                {newCurrencies}
+              </li>
+              <li>
+                <span>Languages:</span>
+                {newLanguages}
+              </li>
+            </ul>
+          </div>
+          <div class="flex items-center flex-wrap gap-2 mt-8 md:mt-16">
+            <span class="w-full mb-2 md:w-fit md:mb-0 md:mr-2">Border countries:</span>
+            {borders?.map((code) => (
+              <a class="inline-flex items-center gap-x-1.5 py-1.5 px-7 bg-[--color-element] rounded-sm shadow hover:brightness-75 dark:hover:brightness-125" href={`/countries/${code}`}>
+                <span class="text-xs md:text-sm">{Country.getByCode({ code })?.name}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
