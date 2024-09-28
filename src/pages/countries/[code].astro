@@ -15,12 +15,13 @@ const { code } = Astro.params
 const country = Country.getByCode({ code })
 if (!country) throw new Error('Country not found')
 const { flags, name, nativeName, population, region, subregion, capital, topLevelDomain, currencies, languages, borders } = country
+const title = `REST Countries API with color theme switcher | ${name}`
 const newCurrencies = currencies?.map(crr => crr.name).join(', ')
 const newLanguages = languages.map(lng => lng.name).join(', ')
 const altText = `The flag of ${name}`
 ---
 
-<Layout title="cascas">
+<Layout title={title}>
   <div class="py-6 px-3 md:pb-32">
     <div class="max-w-container mx-auto space-y-12 md:space-y-20">
       <div>
