@@ -13,6 +13,5 @@ export default defineConfig({
     icon()
   ],
   site: 'https://danieldampe.github.io',
-  base: '/rest-countries-api-with-color-theme-switcher-master',
-  trailingSlash: 'always'
+  base: 'rest-countries-api-with-color-theme-switcher-master'
 })
