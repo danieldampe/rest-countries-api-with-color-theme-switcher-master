@@ -13,5 +13,5 @@ export default defineConfig({
     icon()
   ],
   site: 'https://danieldampe.github.io',
-  base: 'rest-countries-api-with-color-theme-switcher-master'
+  base: '/rest-countries-api-with-color-theme-switcher-master'
 })
