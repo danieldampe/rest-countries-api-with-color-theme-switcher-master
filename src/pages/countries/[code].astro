@@ -25,7 +25,7 @@ const altText = `The flag of ${name}`
   <div class="py-6 px-3 md:pb-32">
     <div class="max-w-container mx-auto space-y-12 md:space-y-20">
       <div>
-        <a class="inline-flex items-center gap-x-1.5 py-1.5 px-7 bg-[--color-element] rounded-sm shadow-md hover:brightness-75 dark:hover:brightness-125 md:py-2.5 md:px-10 md:rounded-md md:[&_>_*]:text-base" href="/">
+        <a class="inline-flex items-center gap-x-1.5 py-1.5 px-7 bg-[--color-element] rounded-sm shadow-md hover:brightness-75 dark:hover:brightness-125 md:py-2.5 md:px-10 md:rounded-md md:[&_>_*]:text-base" href="/rest-countries-api-with-color-theme-switcher-master">
           <Icon name="ion:arrow-back" />
           <span class="text-sm">Back</span>
         </a>
@@ -79,7 +79,7 @@ const altText = `The flag of ${name}`
           <div class="flex items-center flex-wrap gap-2 mt-8 md:mt-16">
             <span class="w-full mb-2 md:w-fit md:mb-0 md:mr-2">Border countries:</span>
             {borders?.map((code) => (
-              <a class="inline-flex items-center gap-x-1.5 py-1.5 px-7 bg-[--color-element] rounded-sm shadow hover:brightness-75 dark:hover:brightness-125" href={`/countries/${code}`}>
+              <a class="inline-flex items-center gap-x-1.5 py-1.5 px-7 bg-[--color-element] rounded-sm shadow hover:brightness-75 dark:hover:brightness-125" href={`/rest-countries-api-with-color-theme-switcher-master/countries/${code}`}>
                 <span class="text-xs md:text-sm">{Country.getByCode({ code })?.name}</span>
               </a>
             ))}
