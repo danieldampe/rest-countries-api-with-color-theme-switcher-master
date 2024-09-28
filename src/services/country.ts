@@ -33,7 +33,7 @@ export const Country = {
         typeof name === 'string' &&
         (
           name.trim() !== ''
-            ? country.name.toLowerCase().includes(name.toLowerCase())
+            ? country.name.toLowerCase().includes(name.trim().toLowerCase())
             : true
         )
       )
